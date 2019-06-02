@@ -184,6 +184,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     for (String string : d) {
       System.out.println(string);
+
     }
   }
 }
