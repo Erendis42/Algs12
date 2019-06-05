@@ -14,11 +14,10 @@ public class Permutation {
     }
 
     for (String string : rqs) {
-      if(k > 0) {
+      if (k > 0) {
         System.out.println(string);
         k--;
-      }
-      else if (k == 0) {
+      } else if (k == 0) {
         break;
       }
     }
