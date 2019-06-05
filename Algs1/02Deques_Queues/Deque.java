@@ -73,7 +73,6 @@ public class Deque<Item> implements Iterable<Item> {
     }
   }
 
-
   // remove and return the item from the front
   public Item removeFirst() {
     if (isEmpty()) {
@@ -143,48 +142,5 @@ public class Deque<Item> implements Iterable<Item> {
 
   public static void main(String[] args) {
 
-    Deque<String> d = new Deque<String>();
-
-    /*
-     * d.addFirst("1st item"); d.addFirst("2nd item"); d.addFirst("3rd item");
-     * d.addFirst("4th item"); d.addFirst("5th item"); d.addFirst("6th item");
-     */
-
-    // /*
-    d.addLast("1st item");
-    d.addLast("2nd item");
-    d.addLast("3rd item");
-    d.addLast("4th item");
-    d.addLast("5th item");
-    d.addLast("6th item");
-    // */
-
-    /*
-     * d.addFirst("1st item"); d.addLast("2nd item"); d.addFirst("3rd item"); d.addLast("4th item");
-     * d.addFirst("5th item"); d.addLast("6th item");
-     */
-
-    /*
-     * System.out.println(d.removeFirst()); System.out.println(d.removeFirst());
-     * System.out.println(d.removeFirst()); System.out.println(d.removeFirst());
-     * System.out.println(d.removeFirst()); System.out.println(d.removeFirst());
-     */
-
-    /*
-     * System.out.println(d.removeLast()); System.out.println(d.removeLast());
-     * System.out.println(d.removeLast()); System.out.println(d.removeLast());
-     * System.out.println(d.removeLast()); System.out.println(d.removeLast());
-     */
-
-    /*
-     * System.out.println(d.removeLast()); System.out.println(d.removeFirst());
-     * System.out.println(d.removeLast()); System.out.println(d.removeFirst());
-     * System.out.println(d.removeLast()); System.out.println(d.removeFirst());
-     */
-
-    for (String string : d) {
-      System.out.println(string);
-
-    }
   }
 }
