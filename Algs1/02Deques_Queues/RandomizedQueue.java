@@ -35,7 +35,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
   // remove and return a random item
   public Item dequeue() {
-    if(numberOfItems == 0) {
+    if (numberOfItems == 0) {
       throw new NoSuchElementException();
     }
 
@@ -62,10 +62,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
   // return a random item (but do not remove it)
   public Item sample() {
-    if(numberOfItems == 0) {
+    if (numberOfItems == 0) {
       throw new NoSuchElementException();
     }
-    
+
     int r = StdRandom.uniform(numberOfItems);
     Item item = arrayOfItems[r];
 
@@ -102,25 +102,5 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
   // unit testing (optional)
   public static void main(String[] args) {
 
-    RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>();
-
-    rq.enqueue(1);
-    rq.enqueue(2);
-    rq.enqueue(3);
-    rq.enqueue(4);
-    rq.enqueue(5);
-
-    System.out.println(rq.sample());
-    System.out.println(rq.sample());
-
-    /*
-     * System.out.println(rq.dequeue()); System.out.println(rq.dequeue());
-     * System.out.println(rq.dequeue()); System.out.println(rq.dequeue());
-     * System.out.println(rq.dequeue());
-     */
-
-    /*
-     * for (Integer i : rq) { System.out.println(i); }
-     */
   }
 }
