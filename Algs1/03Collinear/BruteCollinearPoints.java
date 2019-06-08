@@ -1,95 +1,47 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.stream.DoubleStream;
 
-public class BruteCollinearPoints {
-  private Point[] points;
-  private int n;
-  private LineSegment[] lineSegments;
-  private Point[][] pointPairs;
-  private double[] slopes;
-  private int index = 0;
+public class BruteCollinearPoints {  
+  private ArrayList<LineSegment> lineSegments;  
   
-  //finds all line segments containing 4 points
+  // finds all line segments containing 4 points
   public BruteCollinearPoints(Point[] points) {
-    if(points == null) {
-      throw new java.lang.IllegalArgumentException();
-    }
-    this.points = points;
-    n = points.length;
-    checkPoints();
-
-    // worst case: unique pairs
-    lineSegments = new LineSegment[n*(n-1)/2];
-    slopes = new double[lineSegments.length];
-    pointPairs = new Point[lineSegments.length][2];
-    index = 0;
+    lineSegments = new ArrayList<LineSegment>();
     
-    calculateSegments();
+    // this is where the brute forcing starts:
+    // 4-big sliding window to check if 4 points are on the same line
+    // (two points are on the same line if their slopes are equal)
+    for (int i = 0; i < points.length-3; i++) {
+      Point p = points[i];
+      Point q = points[i+1];
+      Point r = points[i+2];
+      Point s = points[i+3];
+      Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
+      Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
+
+      if (p.slopeTo(q) == q.slopeTo(r) && q.slopeTo(r) == r.slopeTo(s)) {
+        // find the minimum and maximum of these points to define a line segment
+        for (int j = 0; j < 4; j++) {          
+          if(points[i+j].compareTo(min) < 0) {
+            min = points[i+j];
+          }
+          if(points[i+j].compareTo(max) > 0) {
+            max = points[i+j];
+          }
+        }
+        
+        lineSegments.add(new LineSegment(min, max));
+        i+=3;
+      }
+    }
+  }
+  
+  //the line segments
+  public LineSegment[] segments() {
+    return lineSegments.toArray(new LineSegment[lineSegments.size()]);
   }
   
   //the number of line segments
   public int numberOfSegments() {
-    return lineSegments.length;
+    return lineSegments.size();
   }
-
-  // defensive copying
-  public LineSegment[] segments() {
-    return Arrays.copyOf(lineSegments, lineSegments.length);
-  }                
-  
-  // check if any point in the array is null, or if the array contains a repeated point
-  private void checkPoints() {
-    Arrays.sort(points);
-    
-    for (int i = 0; i < points.length; i++) {
-      if(points[i] == null) {
-        throw new java.lang.IllegalArgumentException();
-      }
-    }
-    
-    for (int i = 1; i < points.length; i++) {
-      if (points[i-1] == points[i]) {
-        throw new java.lang.IllegalArgumentException();
-      }
-    }
-  }
-
-  private void calculateSegments() {
-    for (int i = 0; i < points.length-1; i++) {
-      for (int j = i+1; j < points.length; j++) {
-        Point p = points[i];
-        Point q = points[j];
-        lineSegments[index] = new LineSegment(p, q);
-        slopes[index] = p.slopeTo(q);
-        pointPairs[index][0] = p;
-        pointPairs[index][1] = q;
-        index++;
-      }
-    }
-    
-    // also tried
-    // double[] slopesUnique = DoubleStream.of(Arrays.sort(Arrays.copyOf(slopes, slopes.length))).distinct().toArray();
-    // ...but it won't work 
-    
-
-    double[] slopesSorted = Arrays.copyOf(slopes, slopes.length);
-    Arrays.sort(slopesSorted);
-    double[] slopesUnique = DoubleStream.of(slopesSorted).distinct().toArray();
-
-    HashMap<Double, ArrayList<LineSegment>> lines = new HashMap<Double, ArrayList<LineSegment>>();
-    
-    for (int i = 0; i < slopesUnique.length; i++) {
-      ArrayList<LineSegment> lsl = new ArrayList<LineSegment>();;
-      for (int j = 0; j < slopes.length; j++) {
-        if(slopesUnique[i] == slopes[j]) {
-          lsl.add(lineSegments[j]);
-        }
-      }
-      lines.put(slopesUnique[i], lsl);
-    }
-    
-    // I think I need a fresh start with complex data structures in mind :)
-  }  
 }
