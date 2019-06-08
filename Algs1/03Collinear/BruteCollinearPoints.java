@@ -1,9 +1,13 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.stream.DoubleStream;
 
 public class BruteCollinearPoints {
   private Point[] points;
   private int n;
   private LineSegment[] lineSegments;
+  private Point[][] pointPairs;
   private double[] slopes;
   private int index = 0;
   
@@ -19,6 +23,7 @@ public class BruteCollinearPoints {
     // worst case: unique pairs
     lineSegments = new LineSegment[n*(n-1)/2];
     slopes = new double[lineSegments.length];
+    pointPairs = new Point[lineSegments.length][2];
     index = 0;
     
     calculateSegments();
@@ -57,13 +62,34 @@ public class BruteCollinearPoints {
         Point p = points[i];
         Point q = points[j];
         lineSegments[index] = new LineSegment(p, q);
-        slopes[index] = p.slopeTo(q);          
+        slopes[index] = p.slopeTo(q);
+        pointPairs[index][0] = p;
+        pointPairs[index][1] = q;
         index++;
       }
     }
     
-    // TODO: merge points on the same line into one segment and shrink
-    // lineSegments[] array accordingly
-    // (collect point with same slope value into a jagged array)
+    // also tried
+    // double[] slopesUnique = DoubleStream.of(Arrays.sort(Arrays.copyOf(slopes, slopes.length))).distinct().toArray();
+    // ...but it won't work 
+    
+
+    double[] slopesSorted = Arrays.copyOf(slopes, slopes.length);
+    Arrays.sort(slopesSorted);
+    double[] slopesUnique = DoubleStream.of(slopesSorted).distinct().toArray();
+
+    HashMap<Double, ArrayList<LineSegment>> lines = new HashMap<Double, ArrayList<LineSegment>>();
+    
+    for (int i = 0; i < slopesUnique.length; i++) {
+      ArrayList<LineSegment> lsl = new ArrayList<LineSegment>();;
+      for (int j = 0; j < slopes.length; j++) {
+        if(slopesUnique[i] == slopes[j]) {
+          lsl.add(lineSegments[j]);
+        }
+      }
+      lines.put(slopesUnique[i], lsl);
+    }
+    
+    // I think I need a fresh start with complex data structures in mind :)
   }  
 }
