@@ -20,12 +20,13 @@ public class BruteCollinearPoints {
 
       if (p.slopeTo(q) == q.slopeTo(r) && q.slopeTo(r) == r.slopeTo(s)) {
         // find the minimum and maximum of these points to define a line segment
-        for (int j = 0; j < 4; j++) {          
-          if(points[i+j].compareTo(min) < 0) {
-            min = points[i+j];
+        for (int j = 0; j < 4; j++) {
+          Point t = points[i+j]; 
+          if(t.compareTo(min) < 0) {
+            min = t;
           }
-          if(points[i+j].compareTo(max) > 0) {
-            max = points[i+j];
+          if(t.compareTo(max) > 0) {
+            max = t;
           }
         }
         
