@@ -4,9 +4,31 @@ public class BruteCollinearPoints {
   private ArrayList<LineSegment> lineSegments;  
   
   // finds all line segments containing 4 points
-  public BruteCollinearPoints(Point[] points) {
+  public BruteCollinearPoints(Point[] points) {    
+    checkInput(points);    
     lineSegments = new ArrayList<LineSegment>();
+    generateSegments(points);
+  }
+
+  private void checkInput(Point[] points) {
+    if(points == null) {
+      throw new IllegalArgumentException();
+    }
     
+    for (Point point : points) {
+      if(point == null) {
+        throw new IllegalArgumentException();
+      }
+    }
+    
+    for (int i = 1; i < points.length; i++) {
+      if(points[i-1] == points[i]) {
+        throw new IllegalArgumentException();
+      }
+    }
+  }
+
+  private void generateSegments(Point[] points) {
     // this is where the brute forcing starts:
     // 4-big sliding window to check if 4 points are on the same line
     // (two points are on the same line if their slopes are equal)
