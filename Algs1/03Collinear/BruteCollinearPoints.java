@@ -3,12 +3,14 @@ import java.util.Arrays;
 
 public class BruteCollinearPoints {
   private final ArrayList<LineSegment> lineSegments;
+  private Point[] points;
 
   // finds all line segments containing 4 points
   public BruteCollinearPoints(Point[] points) {
     checkInput(points);
+    this.points = points;
     lineSegments = new ArrayList<LineSegment>();
-    generateSegments(points);
+    generateSegments();
   }
 
   private void checkInput(Point[] points) {
@@ -21,17 +23,18 @@ public class BruteCollinearPoints {
         throw new IllegalArgumentException();
       }
     }
-
-    // look for duplicates
-    Arrays.parallelSort(points);
-    for (int i = 1; i < points.length; i++) {
-      if (points[i - 1].compareTo(points[i]) == 0) {
+    
+    // look for duplicates    
+    Point[] pointsCopy = Arrays.copyOf(points, points.length);    
+    Arrays.parallelSort(pointsCopy);
+    for (int i = 1; i < pointsCopy.length; i++) {
+      if (pointsCopy[i - 1].compareTo(pointsCopy[i]) == 0) {
         throw new IllegalArgumentException();
       }
     }
   }
 
-  private void generateSegments(Point[] points) {
+  private void generateSegments() {
     // this is where the brute forcing starts
     for (int i = 0; i < points.length - 3; i++) {
       for (int j = i + 1; j < points.length - 2; j++) {

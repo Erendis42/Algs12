@@ -3,9 +3,12 @@ import java.util.Arrays;
 
 public class FastCollinearPoints {
   private final ArrayList<LineSegment> lineSegments;
+  private Point[] points;
 
   public FastCollinearPoints(Point[] points) {
     checkInput(points);
+    this.points = points;
+    findDuplicates();
     lineSegments = new ArrayList<LineSegment>();
     generateSegments(points);
   }
@@ -20,8 +23,10 @@ public class FastCollinearPoints {
         throw new IllegalArgumentException();
       }
     }
+  }
 
-    // look for duplicates
+  private void findDuplicates() {
+    // look for dupes
     Arrays.parallelSort(points);
     for (int i = 1; i < points.length; i++) {
       if (points[i - 1].compareTo(points[i]) == 0) {
