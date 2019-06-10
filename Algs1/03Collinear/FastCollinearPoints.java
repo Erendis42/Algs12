@@ -11,7 +11,7 @@ public class FastCollinearPoints {
     this.myPoints = Arrays.copyOf(points, points.length);
     findDuplicates();
     lineSegments = new ArrayList<LineSegment>();
-    generateSegments(points);
+    generateSegments();
   }
 
   private void checkInput(Point[] points) {
@@ -36,39 +36,51 @@ public class FastCollinearPoints {
     }
   }
 
-  private void generateSegments(Point[] points) {
-    // the sliding window method is applicable when the array is sorted by the slope they make
-    // with an arbitrary point, which is smaller than or equal to every element in the array,
-    // in this case the origo is the best choice (0 , 0)
-    
-    // TODO: sort again by the slope
+  private void generateSegments() {
+    // loop through the array and see if the actual point and at least 3 other points make the same
+    // slope.
 
-    for (int i = 0; i < points.length - 3; i++) {
-      Point p = points[i];
-      Point q = points[i + 1];
-      Point r = points[i + 2];
-      Point s = points[i + 3];
-      Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
-      Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
+    // Arrays.parallelSort(myPoints, new Point(0,0).slopeOrder());
+    ArrayList<Point> listOfAdjacentPoints = new ArrayList<Point>();
+    Point[] otherPoints = new Point[myPoints.length - 1];
 
-      if (p.slopeTo(q) == q.slopeTo(r) && q.slopeTo(r) == r.slopeTo(s)) {
-        // find the minimum and maximum of these points to define a line segment
-        for (int j = 0; j < 4; j++) {
-          Point t = points[i + j];
-          if (t.compareTo(min) < 0) {
-            min = t;
-          }
-          if (t.compareTo(max) > 0) {
-            max = t;
-          }
+    for (int i = 0; i < myPoints.length - 1; i++) {
+      int index = 0;
+      for (int j = 0; j < myPoints.length; j++) {
+        if (i != j) {
+          otherPoints[index++] = myPoints[j];
         }
+      }
 
-        lineSegments.add(new LineSegment(min, max));
-        i += 3;
+      Arrays.parallelSort(otherPoints, myPoints[i].slopeOrder());
+      Double slope = 0.0;
+
+      for (int j = 0; j < otherPoints.length; j++) {
+        if (j == 0) {
+          listOfAdjacentPoints.add(myPoints[i]);
+          slope = myPoints[i].slopeTo(otherPoints[j]);
+        } else {
+          if (slope != myPoints[i].slopeTo(otherPoints[j])) {
+            if (listOfAdjacentPoints.size() > 3) {
+              Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
+              Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
+              for (Point point : listOfAdjacentPoints) {
+                if (point.compareTo(min) < 0) {
+                  min = point;
+                }
+                if (point.compareTo(max) > 0) {
+                  max = point;
+                }
+              }
+              lineSegments.add(new LineSegment(min, max));
+            }
+            listOfAdjacentPoints.clear();
+          }
+          listOfAdjacentPoints.add(otherPoints[j]);
+        }
       }
     }
   }
-
 
   // the line segments
   public LineSegment[] segments() {
