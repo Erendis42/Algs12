@@ -40,8 +40,8 @@ public class FastCollinearPoints {
     // the sliding window method is applicable when the array is sorted by the slope they make
     // with an arbitrary point, which is smaller than or equal to every element in the array,
     // in this case the origo is the best choice (0 , 0)
-
-    // TODO: sort
+    
+    // TODO: sort again by the slope
 
     for (int i = 0; i < points.length - 3; i++) {
       Point p = points[i];
