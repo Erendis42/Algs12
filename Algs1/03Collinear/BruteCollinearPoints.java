@@ -3,12 +3,13 @@ import java.util.Arrays;
 
 public class BruteCollinearPoints {
   private final ArrayList<LineSegment> lineSegments;
-  private Point[] points;
+  private Point[] myPoints;
 
   // finds all line segments containing 4 points
   public BruteCollinearPoints(Point[] points) {
     checkInput(points);
-    this.points = points;
+    // defensive copy
+    this.myPoints = Arrays.copyOf(points, points.length);
     lineSegments = new ArrayList<LineSegment>();
     generateSegments();
   }
@@ -23,9 +24,9 @@ public class BruteCollinearPoints {
         throw new IllegalArgumentException();
       }
     }
-    
-    // look for duplicates    
-    Point[] pointsCopy = Arrays.copyOf(points, points.length);    
+
+    // look for duplicates
+    Point[] pointsCopy = Arrays.copyOf(points, points.length);
     Arrays.parallelSort(pointsCopy);
     for (int i = 1; i < pointsCopy.length; i++) {
       if (pointsCopy[i - 1].compareTo(pointsCopy[i]) == 0) {
@@ -36,11 +37,11 @@ public class BruteCollinearPoints {
 
   private void generateSegments() {
     // this is where the brute forcing starts
-    for (int i = 0; i < points.length - 3; i++) {
-      for (int j = i + 1; j < points.length - 2; j++) {
-        for (int k = j + 1; k < points.length - 1; k++) {
-          for (int l = k + 1; l < points.length; l++) {
-            Point[] pqrs = {points[i], points[j], points[k], points[l]};
+    for (int i = 0; i < myPoints.length - 3; i++) {
+      for (int j = i + 1; j < myPoints.length - 2; j++) {
+        for (int k = j + 1; k < myPoints.length - 1; k++) {
+          for (int l = k + 1; l < myPoints.length; l++) {
+            Point[] pqrs = {myPoints[i], myPoints[j], myPoints[k], myPoints[l]};
             Point p = pqrs[0];
             Point q = pqrs[1];
             Point r = pqrs[2];
