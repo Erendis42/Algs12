@@ -29,31 +29,33 @@ public class BruteCollinearPoints {
   }
 
   private void generateSegments(Point[] points) {
-    // this is where the brute forcing starts:
-    // 4-big sliding window to check if 4 points are on the same line
-    // (two points are on the same line if their slopes are equal)
+    // this is where the brute forcing starts
     for (int i = 0; i < points.length - 3; i++) {
-      Point p = points[i];
-      Point q = points[i + 1];
-      Point r = points[i + 2];
-      Point s = points[i + 3];
-      Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
-      Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
+      for (int j = i + 1; j < points.length - 2; j++) {
+        for (int k = j + 1; k < points.length - 1; k++) {
+          for (int l = k + 1; l < points.length; l++) {
+            Point[] pqrs = {points[i], points[j], points[k], points[l]};
+            Point p = pqrs[0];
+            Point q = pqrs[1];
+            Point r = pqrs[2];
+            Point s = pqrs[3];
+            Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
+            Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
 
-      if (p.slopeTo(q) == q.slopeTo(r) && q.slopeTo(r) == r.slopeTo(s)) {
-        // find the minimum and maximum of these points to define a line segment
-        for (int j = 0; j < 4; j++) {
-          Point t = points[i + j];
-          if (t.compareTo(min) < 0) {
-            min = t;
-          }
-          if (t.compareTo(max) > 0) {
-            max = t;
+            if (p.slopeTo(q) == q.slopeTo(r) && q.slopeTo(r) == r.slopeTo(s)) {
+              // find the minimum and maximum of these points to define a line segment
+              for (Point t : pqrs) {
+                if (t.compareTo(min) < 0) {
+                  min = t;
+                }
+                if (t.compareTo(max) > 0) {
+                  max = t;
+                }
+              }
+              lineSegments.add(new LineSegment(min, max));
+            }
           }
         }
-
-        lineSegments.add(new LineSegment(min, max));
-        i += 3;
       }
     }
   }
