@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BruteCollinearPoints {
   private final ArrayList<LineSegment> lineSegments;
@@ -21,8 +22,10 @@ public class BruteCollinearPoints {
       }
     }
 
+    // look for duplicates
+    Arrays.parallelSort(points);
     for (int i = 1; i < points.length; i++) {
-      if (points[i - 1] == points[i]) {
+      if (points[i - 1].compareTo(points[i]) == 0) {
         throw new IllegalArgumentException();
       }
     }
