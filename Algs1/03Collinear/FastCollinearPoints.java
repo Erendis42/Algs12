@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class FastCollinearPoints {
   private final ArrayList<LineSegment> lineSegments;
-  private Point[] myPoints;
+  private final Point[] myPoints;
 
   public FastCollinearPoints(Point[] points) {
     checkInput(points);

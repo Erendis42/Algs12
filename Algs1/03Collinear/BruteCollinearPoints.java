@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class BruteCollinearPoints {
   private final ArrayList<LineSegment> lineSegments;
-  private Point[] myPoints;
+  private final Point[] myPoints;
 
   // finds all line segments containing 4 points
   public BruteCollinearPoints(Point[] points) {
