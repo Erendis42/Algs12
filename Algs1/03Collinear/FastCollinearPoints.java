@@ -42,9 +42,8 @@ public class FastCollinearPoints {
 
     // Arrays.parallelSort(myPoints, new Point(0,0).slopeOrder());
     ArrayList<Point> listOfAdjacentPoints = new ArrayList<Point>();
-    Point[] otherPoints = new Point[myPoints.length - 1];
-
     for (int i = 0; i < myPoints.length - 1; i++) {
+      Point[] otherPoints = new Point[myPoints.length - 1];
       int index = 0;
       for (int j = 0; j < myPoints.length; j++) {
         if (i != j) {
@@ -77,6 +76,7 @@ public class FastCollinearPoints {
             listOfAdjacentPoints.clear();
           }
           listOfAdjacentPoints.add(otherPoints[j]);
+          slope = myPoints[i].slopeTo(otherPoints[j]);
         }
       }
     }
