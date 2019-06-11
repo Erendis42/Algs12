@@ -77,9 +77,10 @@ public class FastCollinearPoints {
           // Check if list is empty or the new point we want to add and the last point in the list
           // not only have slopes in common BUT they are actually on the same line.
           // if(listOfAdjacentPoints.isEmpty() ||
-          //    onTheSameLine(listOfAdjacentPoints.get(listOfAdjacentPoints.size() - 1), otherPoints[j], slope)) {
-            listOfAdjacentPoints.add(otherPoints[j]);
-          //}
+          // onTheSameLine(listOfAdjacentPoints.get(listOfAdjacentPoints.size() - 1),
+          // otherPoints[j], slope)) {
+          listOfAdjacentPoints.add(otherPoints[j]);
+          // }
           slope = myPoints[i].slopeTo(otherPoints[j]);
         }
       }
@@ -87,21 +88,21 @@ public class FastCollinearPoints {
   }
 
   private boolean onTheSameLine(Point p, Point q, double slope) {
-    
-    // if the slope is 0,  
-    
-    // the equation of a line is y - y1 = m*(x-x1)    
+
+    // if the slope is 0,
+
+    // the equation of a line is y - y1 = m*(x-x1)
     // ugly hack to extract x and y coordinates of points from their toString() output
     String pStr = p.toString();
     String qStr = q.toString();
-    pStr = pStr.replaceAll("[()]","");
-    qStr = qStr.replaceAll("[()]","");
-    
+    pStr = pStr.replaceAll("[()]", "");
+    qStr = qStr.replaceAll("[()]", "");
+
     int pX = Integer.parseInt(pStr.split(", ")[0]);
     int pY = Integer.parseInt(pStr.split(", ")[1]);
     int qX = Integer.parseInt(qStr.split(", ")[0]);
     int qY = Integer.parseInt(qStr.split(", ")[1]);
-    
+
     return pY - qY == (int) slope * (pX - qX);
   }
 

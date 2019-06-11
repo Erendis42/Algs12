@@ -117,10 +117,12 @@ public class Point implements Comparable<Point> {
       public int compare(Point that1, Point that2) {
         double slope1 = slopeTo(that1);
         double slope2 = slopeTo(that2);
-        
-        if (slope1 < slope2) return -1;
-        if (slope1 > slope2) return  1;
-        
+
+        if (slope1 < slope2)
+          return -1;
+        if (slope1 > slope2)
+          return 1;
+
         return that1.compareTo(that2);
       }
     };
