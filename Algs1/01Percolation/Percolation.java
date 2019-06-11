@@ -25,7 +25,7 @@ public class Percolation {
     idTop = n * n;
     idBottom = n * n + 1;
 
-    // +2 field for virtual top and bottom nodes
+    // +2 fields for virtual top and bottom nodes
     dataStructure = new WeightedQuickUnionUF(n * n + 2);
 
     // +1 layer to store the state of a particular site,

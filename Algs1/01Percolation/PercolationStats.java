@@ -12,6 +12,7 @@ public class PercolationStats {
 
   /**
    * Constructor.
+   * 
    * @param n Size of the grid.
    * @param trials Number of trials to do the math.
    */
@@ -74,8 +75,9 @@ public class PercolationStats {
   }
 
   /**
-   * Main function. Accepts two parameters from the command line and uses them as size of grid
-   * and number of trials for the simulation, respectively.
+   * Main function. Accepts two parameters from the command line and uses them as size of grid and
+   * number of trials for the simulation, respectively.
+   * 
    * @param args String array to store command line arguments.
    */
   public static void main(String[] args) {
