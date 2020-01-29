@@ -171,8 +171,14 @@ public class Board {
     	Random r = new Random();
     	
     	int[] c1 = { r.nextInt(n), r.nextInt(n)};
+    	while (tiles[c1[0]][c1[1]] == 0)
+    	{
+    		c1[0] = r.nextInt(n);
+			c1[1] = r.nextInt(n);
+    	}
+    	
     	int[] c2 = { r.nextInt(n), r.nextInt(n)};
-    	while (c1.equals(c2))
+    	while (tiles[c2[0]][c2[1]] == 0 || c1.equals(c2))
     	{
     			c2[0] = r.nextInt(n);
     			c2[1] = r.nextInt(n);
