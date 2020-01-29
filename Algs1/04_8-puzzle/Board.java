@@ -26,9 +26,11 @@ public class Board {
     	
     	for(int row = 0; row < n; row++) {
     		for(int col = 0; col < n; col++) {
-    			goal[row][col] = (row*n + col+1) % (n*n);
+    			goal[row][col] = row*n + col + 1;
     		}
     	}
+    	
+    	goal[n-1][n-1] = 0;
 	}
 
 	// string representation of this board
