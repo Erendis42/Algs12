@@ -5,6 +5,10 @@ public class Board {
 	int[][] tiles;
 	int[][] goal;
 	int n;
+	
+	int hammingDistance;
+	int manhattanDistance;
+	
     // create a board from an n-by-n array of tiles,
     // where tiles[row][col] = tile at (row, col)
 
@@ -17,6 +21,8 @@ public class Board {
     	this.tiles = tiles;
     	goal = new int[n][n];
     	generateGoal();
+    	calculateHammingDistance();
+    	calculateManhattanDistance();
     }
                                            
     private void generateGoal() {
@@ -64,23 +70,29 @@ public class Board {
     }
 
     // number of tiles out of place
-    public int hamming() {
-    	int result = 0;
+    public int hamming() {    	
+    	return hammingDistance;
+    }
+
+    private void calculateHammingDistance() {
+    	hammingDistance = 0;
     	
     	for(int row = 0; row < n; row++) {
     		for(int col = 0; col < n; col++) {
     			if(tiles[row][col] != 0 && tiles[row][col] != goal[row][col]) {
-    				result++;
+    				hammingDistance++;
     			}
     		}
-    	}
-    	
-    	return result;
+    	}		
+	}
+
+	// sum of Manhattan distances between tiles and goal
+    public int manhattan() { 
+    	return manhattanDistance;
     }
 
-    // sum of Manhattan distances between tiles and goal
-    public int manhattan() { 
-    	int result = 0;
+    private void calculateManhattanDistance() {
+    	manhattanDistance = 0;
     	int goalX;
     	int goalY;
     	int diffX;
@@ -110,14 +122,13 @@ public class Board {
     				diffX = Math.abs(col - goalX);
     				diffY = Math.abs(row - goalY);
     			}
-    			result += diffX;
-    			result += diffY;
+    			manhattanDistance += diffX;
+    			manhattanDistance += diffY;
     		}
-    	}
-    	return result;
-    }
+    	}		
+	}
 
-    // is this board the goal board?
+	// is this board the goal board?
     public boolean isGoal() { return toString().equals(boardToString(goal)); }
 
     // does this board equal y?
@@ -200,7 +211,7 @@ public class Board {
 
 	// unit testing (not graded)
     public static void main(String[] args) {
-    	
+	/*
     	int[][] testTiles1 = new int[][] {
     		{8,1,3},
     		{4,0,2},
@@ -236,6 +247,8 @@ public class Board {
     	//System.out.println(b1.equals(b2));    	
     	//System.out.println(b1.hamming());
     	//System.out.println(b1.manhattan());
+
+ 	*/
     }
 
 }
