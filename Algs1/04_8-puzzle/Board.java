@@ -17,26 +17,29 @@ public class Board {
 	 * represents the blank square. You may also assume that 2 ≤ n <128.
 	 */
     public Board(int[][] tiles) {
-    	this.n = tiles.length;
     	this.tiles = tiles;
-    	goal = new int[n][n];
-    	generateGoal();
-    	calculateHammingDistance();
-    	calculateManhattanDistance();
+    	n = tiles.length;    	
+    	goal = generateGoal();
+    	hammingDistance = calculateHammingDistance();
+    	manhattanDistance = calculateManhattanDistance();
     }
                                            
-    private void generateGoal() {
+    private int[][] generateGoal() {
 		/* generate board to be achieved with 0 as the last element
     	 * -- in the bottom right corner
     	 */
     	
+    	int[][] result = new int[n][n];
+    	
     	for(int row = 0; row < n; row++) {
     		for(int col = 0; col < n; col++) {
-    			goal[row][col] = row*n + col + 1;
+    			result[row][col] = row*n + col + 1;
     		}
     	}
     	
-    	goal[n-1][n-1] = 0;
+    	result[n-1][n-1] = 0;
+    	
+    	return result;
 	}
 
 	// string representation of this board
@@ -74,16 +77,18 @@ public class Board {
     	return hammingDistance;
     }
 
-    private void calculateHammingDistance() {
-    	hammingDistance = 0;
+    private int calculateHammingDistance() {
+    	int result = 0;
     	
     	for(int row = 0; row < n; row++) {
     		for(int col = 0; col < n; col++) {
     			if(tiles[row][col] != 0 && tiles[row][col] != goal[row][col]) {
-    				hammingDistance++;
+    				result++;
     			}
     		}
-    	}		
+    	}
+    	
+    	return result;
 	}
 
 	// sum of Manhattan distances between tiles and goal
@@ -91,8 +96,8 @@ public class Board {
     	return manhattanDistance;
     }
 
-    private void calculateManhattanDistance() {
-    	manhattanDistance = 0;
+    private int calculateManhattanDistance() {
+    	int result = 0;
     	int goalX;
     	int goalY;
     	int diffX;
@@ -122,10 +127,11 @@ public class Board {
     				diffX = Math.abs(col - goalX);
     				diffY = Math.abs(row - goalY);
     			}
-    			manhattanDistance += diffX;
-    			manhattanDistance += diffY;
+    			result += diffX;
+    			result += diffY;
     		}
-    	}		
+    	}
+    	return result;
 	}
 
 	// is this board the goal board?
