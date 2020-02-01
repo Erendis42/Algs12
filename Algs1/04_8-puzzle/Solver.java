@@ -3,48 +3,55 @@ import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Solver {
-	
-	class SearchNode implements Comparable<SearchNode>{
-		private Board board;
-		private int moves;
-		private int priority;
-		private SearchNode prev;
+    
+    class SearchNode implements Comparable<SearchNode>{
+        private Board board;
+        private int moves;
+        private int priority;
+        private SearchNode prev;
 
-		public SearchNode(Board board, int moves, SearchNode prev) {
-			this.board = board;
-			this.moves = moves;
-			this.priority = board.manhattan() + this.moves;
-		}
+        public SearchNode(Board board, int moves, SearchNode prev) {
+            this.board = board;
+            this.moves = moves;
+            this.priority = board.manhattan() + this.moves;
+        }
 
-		private int getMoves() {
-			return moves;
-		}
+        private int getMoves() {
+            return moves;
+        }
 
-		private int getPriority() {
-			return priority;
-		}
+        private int getPriority() {
+            return priority;
+        }
 
-		private SearchNode getPrev() {
-			return prev;
-		}
+        private SearchNode getPrev() {
+            return prev;
+        }
 
-		@Override
-		public int compareTo(SearchNode that) {
-			return Integer.compare(this.getPriority(), that.getPriority());
-		}
-	}
+        @Override
+        public int compareTo(SearchNode that) {
+            return Integer.compare(this.getPriority(), that.getPriority());
+        }
+    }
 
     // find a solution to the initial board (using the A* algorithm)
     public Solver(Board initial) {
-    	if(initial == null) {
-    		throw new IllegalArgumentException();
-    	}
-    	
-    	SearchNode node = new SearchNode(initial, 0, null);
-    	
-    	MinPQ<SearchNode> nodes = new MinPQ<SearchNode>();
-    	
-    	nodes.insert(node);    	
+        if(initial == null) {
+            throw new IllegalArgumentException();
+        }
+        
+        SearchNode node = new SearchNode(initial, 0, null);        
+        MinPQ<SearchNode> nodes = new MinPQ<SearchNode>();        
+        nodes.insert(node);
+        
+        SearchNode twin = new SearchNode(node.board.twin(), 0, null);        
+        MinPQ<SearchNode> twins = new MinPQ<SearchNode>();
+        twins.insert(twin);
+        
+        /* Now we can start searching for the solution of two boards,
+         * seing which onw is able to reach the goal. Either the original
+         * set of tiles or the twin has a solution.
+         */
     }
 
     // is the initial board solvable? (see below)
