@@ -1,10 +1,12 @@
 import java.util.LinkedList;
-import java.util.Random;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class Board {
-  private int[][] tiles;
-  private int[][] goal;
-  private int n;
+  private final int[][] tiles;
+  private final int[][] goal;
+  private final int[][] twin;
+  
+  private final int n;
 
   private int hammingDistance;
   private int manhattanDistance;
@@ -18,9 +20,10 @@ public class Board {
    * <128.
    */
   public Board(int[][] tiles) {
-    this.tiles = java.util.Arrays.stream(tiles).map(el -> el.clone()).toArray($ -> tiles.clone());;
+    this.tiles = java.util.Arrays.stream(tiles).map(el -> el.clone()).toArray($ -> tiles.clone());
     n = tiles.length;
     goal = generateGoal();
+    twin = generateTwin();
     hammingDistance = calculateHammingDistance();
     manhattanDistance = calculateManhattanDistance();
   }
@@ -176,7 +179,7 @@ public class Board {
 
       // check if field neighboring the 0 element isn't outside of the array
       if (rn >= 0 && rn < n && cn >= 0 && cn < n) {
-        Board b = flip(new int[] {rowOfNull, colOfNull}, new int[] {rn, cn});
+        Board b = new Board(flip(new int[] {rowOfNull, colOfNull}, new int[] {rn, cn}));
         nbrs.add(b);
       }
     }
@@ -186,32 +189,33 @@ public class Board {
 
   // a board that is obtained by exchanging any pair of tiles
   public Board twin() {
-    Random r = new Random();
+    return new Board(twin);
+  }
 
-    int[] c1 = {r.nextInt(n), r.nextInt(n)};
+  private int[][] generateTwin() {
+    int[] c1 = {StdRandom.uniform(n), StdRandom.uniform(n)};
     while (tiles[c1[0]][c1[1]] == 0) {
-      c1[0] = r.nextInt(n);
-      c1[1] = r.nextInt(n);
+      c1[0] = StdRandom.uniform(n);
+      c1[1] = StdRandom.uniform(n);
     }
 
-    int[] c2 = {r.nextInt(n), r.nextInt(n)};
+    int[] c2 = {StdRandom.uniform(n), StdRandom.uniform(n)};
     while (tiles[c2[0]][c2[1]] == 0 || c1[0] == c2[0] && c1[1] == c2[1]) {
-      c2[0] = r.nextInt(n);
-      c2[1] = r.nextInt(n);
+      c2[0] = StdRandom.uniform(n);
+      c2[1] = StdRandom.uniform(n);
     }
 
     return flip(c1, c2);
   }
 
-  private Board flip(int[] c1, int[] c2) {
+  private int[][] flip(int[] c1, int[] c2) {
     int[][] t = java.util.Arrays.stream(tiles).map(el -> el.clone()).toArray($ -> tiles.clone());
     int temp = tiles[c1[0]][c1[1]];
 
     t[c1[0]][c1[1]] = t[c2[0]][c2[1]];
     t[c2[0]][c2[1]] = temp;
 
-    Board b = new Board(t);
-    return b;
+    return t;
   }
 
   // unit testing (not graded)
