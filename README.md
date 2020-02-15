@@ -7,7 +7,6 @@ Submissions for Algorithms I-II courses of Princeton University at coursera.org
 
 >- [X] [Week 2 - Deques and Randomized Queues](http://coursera.cs.princeton.edu/algs4/assignments/queues.html)
 >- Write a generic data type for a deque and a randomized queue.
->- The goal of this assignment is to implement elementary data structures using arrays and linked lists, and to introduce you to generics and iterators.
 
 >- [X] [Week 3 - Pattern Recognition](http://coursera.cs.princeton.edu/algs4/assignments/collinear.html)
 >- Write a program to recognize line patterns in a given set of points.
