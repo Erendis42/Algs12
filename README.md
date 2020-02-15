@@ -12,4 +12,4 @@ Submissions for Algorithms I-II courses of Princeton University at coursera.org
 >- Write a program to recognize line patterns in a given set of points.
 
 >- [ ] [Week 4 - 8 Puzzle](http://coursera.cs.princeton.edu/algs4/assignments/8puzzle.html)
->- Write a program to solve the 8-puzzle problem (and its natural generalizations) using the A* search algorithm.
+>- Write a program to solve the 8-puzzle problem (and its natural generalizations) using the [A* search algorithm](http://en.wikipedia.org/wiki/A*_search_algorithm).
