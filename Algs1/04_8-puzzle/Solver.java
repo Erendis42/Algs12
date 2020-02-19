@@ -61,12 +61,6 @@ public class Solver {
       for (Board b : generateUsefulNeighbors(minTwin)) {
         nodes.insert(new SearchNode(b, minTwin.getMoves() + 1, minTwin));
       }
-
-      /*
-       * If more than one neighbor has the same lowest priority, in 2 levels of recursion we can
-       * decide whether it is the single way to keep getting lower hamming distances or it starts
-       * rising again.
-       */
     }
   }
 
