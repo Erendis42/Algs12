@@ -64,7 +64,7 @@ public class Solver {
 
       /*
        * Having 3 or less possible next step neighbors, the height of the search tree never exceeds
-       * 3 while solving this particular problem.
+       * 3 while solving this particular problem. (middle-side-corner)
        */
     }
   }
