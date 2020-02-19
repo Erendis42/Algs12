@@ -43,13 +43,8 @@ public class Solver {
       throw new IllegalArgumentException();
     }
 
-    SearchNode node = new SearchNode(initial, 0, null);
-    MinPQ<SearchNode> nodes = new MinPQ<SearchNode>();
-    nodes.insert(node);
-
-    SearchNode twin = new SearchNode(node.board.twin(), 0, null);
-    MinPQ<SearchNode> twinNodes = new MinPQ<SearchNode>();
-    twinNodes.insert(twin);
+    MinPQ<SearchNode> nodes = createNewPQ(initial);
+    MinPQ<SearchNode> twinNodes = createNewPQ(initial.twin());
 
     /*
      * Now we can start searching for the solution of two boards, seing which one is able to reach
@@ -58,26 +53,36 @@ public class Solver {
 
     while (!nodes.min().board.isGoal() && !twinNodes.min().board.isGoal()) {
       SearchNode min = nodes.min();
-      SearchNode minTwin = twinNodes.min();
-      LinkedList<Board> nodeNeighbors = (LinkedList<Board>) nodes.min().board.neighbors();
-      LinkedList<Board> twinNeighbors = (LinkedList<Board>) twinNodes.min().board.neighbors();
-
-      for (Board board : nodeNeighbors) {
-        if (board.equals(min.prev.board)) {
-          nodeNeighbors.remove(board);
-        } else {
-          nodes.insert(new SearchNode(board, min.getMoves() + 1, min));
-        }
+      for (Board b : generateUsefulNeighbors(min)) {
+        nodes.insert(new SearchNode(b, min.getMoves() + 1, min));
       }
 
-      for (Board board : twinNeighbors) {
-        if (board.equals(minTwin.prev.board)) {
-          twinNeighbors.remove(board);
-        } else {
-          twinNodes.insert(new SearchNode(board, minTwin.getMoves() + 1, minTwin));
-        }
+      SearchNode minTwin = twinNodes.min();
+      for (Board b : generateUsefulNeighbors(minTwin)) {
+        nodes.insert(new SearchNode(b, minTwin.getMoves() + 1, minTwin));
+      }
+
+
+    }
+  }
+
+  private LinkedList<Board> generateUsefulNeighbors(SearchNode node) {
+    LinkedList<Board> nbrs = (LinkedList<Board>) node.board.neighbors();
+
+    for (Board b : nbrs) {
+      if (b.equals(node.prev.board)) {
+        nbrs.remove(b);
       }
     }
+
+    return nbrs;
+  }
+
+  private MinPQ<SearchNode> createNewPQ(Board board) {
+    SearchNode node = new SearchNode(board, 0, null);
+    MinPQ<SearchNode> nodesPQ = new MinPQ<SearchNode>();
+    nodesPQ.insert(node);
+    return nodesPQ;
   }
 
   // is the initial board solvable? (see below)
