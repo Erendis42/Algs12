@@ -1,6 +1,8 @@
 # Algs12
 Submissions for Algorithms I-II courses of Princeton University at coursera.org
 
+# * Don't look at this if you want to do the courses before submitting your own code first! *
+
 ### [Algorithms I](https://www.coursera.org/learn/algorithms-part1)
 >- [X] [Week 1 - Percolation](http://coursera.cs.princeton.edu/algs4/assignments/percolation.html)
 >- Write a program to estimate the value of the *percolation threshold* via Monte Carlo simulation.
