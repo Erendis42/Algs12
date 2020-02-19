@@ -61,6 +61,11 @@ public class Solver {
       for (Board b : generateUsefulNeighbors(minTwin)) {
         nodes.insert(new SearchNode(b, minTwin.getMoves() + 1, minTwin));
       }
+
+      /*
+       * Having 3 or less possible next step neighbors, the height of the search tree never exceeds
+       * 3 while solving this particular problem.
+       */
     }
   }
 
