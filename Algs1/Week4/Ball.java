@@ -18,9 +18,9 @@ public class Ball {
 		int i;
 		
 		i = r.nextInt();		
-		vx = v * (i % 2 == 0 ? 1 : -1);
+		vx = v * (i % 2 == 1 ? 1 : -1);
 		i = r.nextInt();
-		vy = v * (i % 2 == 0 ? 1 : -1);
+		vy = v * (i % 2 == 1 ? 1 : -1);
 	}
 	
 	public Ball(double rx, double ry, double vx, double vy, double radius) {
